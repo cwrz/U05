@@ -8,8 +8,10 @@ declare -a array
 
 for ((i=0; i<$zahl; i++))
 do
-    array[i]=$(( $RANDOM % 99999 + 10000 ))
-    echo ${array[i]}
+    #passwort=$(( $RANDOM % 99999 + 10000 ))
+    passwort=$(openssl rand -base64 30)
+    array[i]=$(openssl passwd -6 -salt x "$passwort")
+    echo ${array[i]} "$passwort"
 done
 printf "%s\n" "${array[@]}" > $name.txt
 mv $name.txt TAN
